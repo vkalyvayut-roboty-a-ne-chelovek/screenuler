@@ -7,6 +7,8 @@ Keybindings are:
 
 ```CTRL-Q``` or ```ESC``` - exit
 
+```CTRL-T``` - toggle orientation (horizontal or vertical)
+
 ```CTRL-S``` - change size to small (250x75)
 
 ```CTRL-M``` - change size to medium (500x75)
