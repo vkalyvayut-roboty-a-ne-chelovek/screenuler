@@ -1,6 +1,8 @@
 # screenuler
 Simple Python Tkinter screen ruler
 
+![image](https://github.com/vkalyvayut-roboty-a-ne-chelovek/screenuler/blob/master/image.png)
+
 Keybindings are:
 
 ```CTRL-Q``` or ```ESC``` - exit
