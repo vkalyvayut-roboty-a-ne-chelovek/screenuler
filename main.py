@@ -1,8 +1,7 @@
 import argparse
-import sys
-import time
 import tkinter
 import typing
+from collections import namedtuple
 
 from miros import ActiveObject
 from miros import return_status
@@ -11,9 +10,9 @@ from miros import signals
 from miros import spy_on
 
 import helpers
-from collections import namedtuple
 
 MoveEventPayload = namedtuple('MoveEventPayload', ['direction', 'speedup'])
+
 
 class GlobalBus:
     def __init__(self):
@@ -288,4 +287,3 @@ if __name__ == '__main__':
     s.start_at(init_state)
 
     g.run()
-
