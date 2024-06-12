@@ -2,6 +2,8 @@
 Simple Python Tkinter screen ruler
 
 ![image](https://github.com/vkalyvayut-roboty-a-ne-chelovek/screenuler/blob/master/image.png)
+
+![image](https://github.com/vkalyvayut-roboty-a-ne-chelovek/screenuler/blob/master/image2.png)
 ```
 options:
   -h, --help            show this help message and exit

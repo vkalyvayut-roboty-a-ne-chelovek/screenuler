@@ -113,6 +113,10 @@ class Gui(TestableGui):
 
         self.root.bind('<Motion>', lambda e: self.send_event(signal=signals.POINTER_MOVED, payload=(e.x, e.y)))
 
+        self.root.bind('<Enter>', lambda e: self.send_event(signal=signals.SHOW_EXTERNAL_MARKER))
+
+        self.root.bind('<Leave>', lambda e: self.send_event(signal=signals.HIDE_EXTERNAL_MARKER))
+
     def run(self):
         self.bind_events()
         self.root.mainloop()
@@ -163,6 +167,12 @@ class Gui(TestableGui):
             x, y = helpers.get_position(self.root.geometry())
             self.external_position_marker.geometry(f'+{x+75}+{self.root.winfo_pointery()}')
 
+    def show_external_marker(self):
+        self.external_position_marker.state('normal')
+
+    def hide_external_marker(self):
+        self.external_position_marker.state('withdrawn')
+
     def make_horizontal(self, size: int = 1):
         geometry = self.root.geometry()
         x, y = helpers.get_position(geometry)
@@ -173,7 +183,6 @@ class Gui(TestableGui):
 
         for pos in range(0, width + 50, 10):
             self._draw_mark(pos)
-
 
         self.external_position_marker.geometry('1x50+50+50')
 
@@ -250,6 +259,12 @@ def horizontal_state(c: Statechart, e: Event) -> return_status:
     elif e.signal == signals.POINTER_MOVED:
         c.bus.gui.update_position_markers(e.payload[0])
         status = return_status.HANDLED
+    elif e.signal == signals.SHOW_EXTERNAL_MARKER:
+        c.bus.gui.show_external_marker()
+        status = return_status.HANDLED
+    elif e.signal == signals.HIDE_EXTERNAL_MARKER:
+        c.bus.gui.hide_external_marker()
+        status = return_status.HANDLED
     else:
         status = return_status.SUPER
         c.temp.fun = init_state
@@ -279,6 +294,12 @@ def vertical_state(c: Statechart, e: Event) -> return_status:
         status = return_status.HANDLED
     elif e.signal == signals.POINTER_MOVED:
         c.bus.gui.update_position_markers(e.payload[1], direction='vertical')
+        status = return_status.HANDLED
+    elif e.signal == signals.SHOW_EXTERNAL_MARKER:
+        c.bus.gui.show_external_marker()
+        status = return_status.HANDLED
+    elif e.signal == signals.HIDE_EXTERNAL_MARKER:
+        c.bus.gui.hide_external_marker()
         status = return_status.HANDLED
     else:
         status = return_status.SUPER
