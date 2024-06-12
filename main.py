@@ -82,6 +82,7 @@ class Gui(TestableGui):
 
         self.root = tkinter.Tk()
         self.canvas = tkinter.Canvas(self.root, background=self.background)
+        self.external_position_marker = tkinter.Toplevel(background=self.position_color)
 
         self.root.title('screenuler 🤡')
         self.root.resizable(False, False)
@@ -89,6 +90,9 @@ class Gui(TestableGui):
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
         self.canvas.grid(column=0, row=0, sticky='nesw')
+
+        self.external_position_marker.overrideredirect(True)
+        self.external_position_marker.geometry('0x0+0+0')
 
     def bind_events(self):
         self.root.bind('<Control-q>', lambda _: self.send_event(signal=signals.SHUTDOWN))
@@ -149,9 +153,15 @@ class Gui(TestableGui):
         if direction == 'horizontal':
             self.position_marker = self.canvas.create_rectangle(pos, 0, pos, 50, fill=self.position_color, outline=self.position_color)
             self.position_text = self.canvas.create_text(15, 50, text=pos, justify='center', fill=self.position_color)
+
+            x, y = helpers.get_position(self.root.geometry())
+            self.external_position_marker.geometry(f'+{self.root.winfo_pointerx()}+{y-25}')
         elif direction == 'vertical':
             self.position_marker = self.canvas.create_rectangle(25, pos, 75, pos, fill=self.position_color, outline=self.position_color)
             self.position_text = self.canvas.create_text(15, 25, text=pos, justify='center', fill=self.position_color)
+
+            x, y = helpers.get_position(self.root.geometry())
+            self.external_position_marker.geometry(f'+{x+75}+{self.root.winfo_pointery()}')
 
     def make_horizontal(self, size: int = 1):
         geometry = self.root.geometry()
@@ -164,6 +174,9 @@ class Gui(TestableGui):
         for pos in range(0, width + 50, 10):
             self._draw_mark(pos)
 
+
+        self.external_position_marker.geometry('1x50+50+50')
+
     def make_vertical(self, size: int = 1):
         geometry = self.root.geometry()
         x, y = helpers.get_position(geometry)
@@ -174,6 +187,8 @@ class Gui(TestableGui):
 
         for pos in range(0, height + 50, 10):
             self._draw_mark(pos, direction='vertical')
+
+        self.external_position_marker.geometry('50x1+50+50')
 
     def move(self, x, y, speedup: bool = False):
         geometry = self.root.geometry()
