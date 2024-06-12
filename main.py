@@ -1,3 +1,4 @@
+import argparse
 import sys
 import time
 import tkinter
@@ -69,15 +70,19 @@ class Gui(TestableGui):
 
     default_size = 1
 
-    def __init__(self, bus: GlobalBus):
-        self.bus = bus
-        self.bus.register_gui(self)
+    def __init__(self, bus: GlobalBus, background='red', mark_color='black', position_color='white'):
+        super().__init__(bus=bus)
 
-        self.root = tkinter.Tk()
-        self.canvas = tkinter.Canvas(self.root, background='red')
+        self.background = background
+        self.mark_color = mark_color
+        self.position_color = position_color
+
         self.canvas_figures = []
         self.position_marker = None
         self.position_text = None
+
+        self.root = tkinter.Tk()
+        self.canvas = tkinter.Canvas(self.root, background=self.background)
 
         self.root.title('screenuler 🤡')
         self.root.resizable(False, False)
@@ -121,16 +126,16 @@ class Gui(TestableGui):
 
     def _draw_mark(self, pos, direction='horizontal'):
         if direction == 'horizontal':
-            fig = self.canvas.create_rectangle(pos, 0, pos, 25)
+            fig = self.canvas.create_rectangle(pos, 0, pos, 25, fill=self.mark_color, outline=self.mark_color)
             self.canvas_figures.append(fig)
             if pos % 50 == 0:
-                fig = self.canvas.create_text(pos, 40, justify='center', text=pos, angle=90.0)
+                fig = self.canvas.create_text(pos, 40, justify='center', text=pos, angle=90.0, fill=self.mark_color)
                 self.canvas_figures.append(fig)
         elif direction == 'vertical':
-            fig = self.canvas.create_rectangle(50, pos, 75, pos)
+            fig = self.canvas.create_rectangle(50, pos, 75, pos, fill=self.mark_color, outline=self.mark_color)
             self.canvas_figures.append(fig)
             if pos % 50 == 0:
-                fig = self.canvas.create_text(25, pos, justify='center', text=pos)
+                fig = self.canvas.create_text(25, pos, justify='center', text=pos, fill=self.mark_color)
                 self.canvas_figures.append(fig)
 
     def update_position_markers(self, pos, direction='horizontal'):
@@ -143,11 +148,11 @@ class Gui(TestableGui):
             self.position_text = None
 
         if direction == 'horizontal':
-            self.position_marker = self.canvas.create_rectangle(pos, 0, pos, 50, fill='black')
-            self.position_text = self.canvas.create_text(15, 50, text=pos, justify='center', fill='white')
+            self.position_marker = self.canvas.create_rectangle(pos, 0, pos, 50, fill=self.position_color, outline=self.position_color)
+            self.position_text = self.canvas.create_text(15, 50, text=pos, justify='center', fill=self.position_color)
         elif direction == 'vertical':
-            self.position_marker = self.canvas.create_rectangle(25, pos, 75, pos, fill='black')
-            self.position_text = self.canvas.create_text(15, 25, text=pos, justify='center', fill='white')
+            self.position_marker = self.canvas.create_rectangle(25, pos, 75, pos, fill=self.position_color, outline=self.position_color)
+            self.position_text = self.canvas.create_text(15, 25, text=pos, justify='center', fill=self.position_color)
 
     def make_horizontal(self, size: int = 1):
         geometry = self.root.geometry()
@@ -269,9 +274,16 @@ def vertical_state(c: Statechart, e: Event) -> return_status:
 
 
 if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(prog='screenuler', description='Simple Python Tkinter screen ruler')
+    parser.add_argument('-b', '--background', type=str, default='red', help='color name (red) or hexcode (#f00)')
+    parser.add_argument('-m', '--mark_color', type=str, default='black', help='color name (red) or hexcode (#f00)')
+    parser.add_argument('-p', '--position_color', type=str, default='white', help='color name (red) or hexcode (#f00)')
+    args = parser.parse_args()
+
     b = GlobalBus()
     s = Statechart('statechart', bus=b)
-    g = Gui(bus=b)
+    g = Gui(bus=b, background=args.background, mark_color=args.mark_color, position_color=args.position_color)
 
     s.start_at(init_state)
 
