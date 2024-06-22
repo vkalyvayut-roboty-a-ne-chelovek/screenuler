@@ -50,7 +50,7 @@ class TestableGui:
     def make_vertical(self, size: int = 1):
         pass
 
-    def move(self, x, y, speedup: bool = False):
+    def move(self, x, y, speedup: int = 0):
         pass
 
     def update_position_markers(self, pos, direction='horizontal'):
@@ -103,13 +103,13 @@ class Gui(TestableGui):
         self.root.bind('<Control-m>', lambda _: self.send_event(signal=signals.SET_SIZE_2))
         self.root.bind('<Control-l>', lambda _: self.send_event(signal=signals.SET_SIZE_3))
 
-        self.root.bind('<Left>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(-10, 0), speedup=helpers.is_speedup_modifier_active(e.state))))
+        self.root.bind('<Left>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(-1, 0), speedup=helpers.is_speedup_modifier_active(e.state))))
 
-        self.root.bind('<Right>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(10, 0),speedup=helpers.is_speedup_modifier_active(e.state))))
+        self.root.bind('<Right>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(1, 0),speedup=helpers.is_speedup_modifier_active(e.state))))
 
-        self.root.bind('<Up>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(0, -10), speedup=helpers.is_speedup_modifier_active(e.state))))
+        self.root.bind('<Up>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(0, -1), speedup=helpers.is_speedup_modifier_active(e.state))))
 
-        self.root.bind('<Down>', lambda e: self.send_event(signal=signals.MOVE,payload=MoveEventPayload(direction=(0, 10), speedup=helpers.is_speedup_modifier_active(e.state))))
+        self.root.bind('<Down>', lambda e: self.send_event(signal=signals.MOVE,payload=MoveEventPayload(direction=(0, 1), speedup=helpers.is_speedup_modifier_active(e.state))))
 
         self.root.bind('<Motion>', lambda e: self.send_event(signal=signals.POINTER_MOVED, payload=(e.x, e.y)))
 
@@ -199,14 +199,13 @@ class Gui(TestableGui):
 
         self.external_position_marker.geometry('50x1+50+50')
 
-    def move(self, x, y, speedup: bool = False):
+    def move(self, x, y, speedup: int = 0):
         geometry = self.root.geometry()
         _x, _y = helpers.get_position(geometry)
         width, height = helpers.get_size(geometry)
-        speedup_factor = 5 if speedup else 1
 
-        new_x = max(0, _x + x * speedup_factor)
-        new_y = max(0, _y + y * speedup_factor)
+        new_x = max(0, _x + x * speedup)
+        new_y = max(0, _y + y * speedup)
 
         self._set_geometry(width, height, new_x, new_y)
 

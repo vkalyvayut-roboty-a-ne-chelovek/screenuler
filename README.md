@@ -28,4 +28,4 @@ Keybindings are:
 
 ```CTRL-L``` - change size to large (750x75)
 
-```Left arrow```, ```Right arrow```, ```Up arrow```, ```Down arrow``` - move
+```Left arrow```, ```Right arrow```, ```Up arrow```, ```Down arrow``` - move (+10 while holding `Control`, +25 while holding `Shift`)

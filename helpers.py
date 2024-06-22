@@ -17,5 +17,13 @@ def get_size(geometry: str) -> typing.Tuple:
     return width, height
 
 
-def is_speedup_modifier_active(state) -> bool:
-    return state & 0x0004 == 4
+def is_speedup_modifier_active(state) -> int:
+    result = 1
+
+    if state & 0x0004 == 4:
+        result = 10
+
+    if state & 0x0001 == 1:
+        result = 25
+
+    return result
