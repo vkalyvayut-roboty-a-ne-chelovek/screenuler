@@ -1,6 +1,6 @@
 import unittest
 
-import helpers
+from src import helpers
 
 
 class TestHelpers(unittest.TestCase):

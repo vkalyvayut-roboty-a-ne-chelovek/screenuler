@@ -1,4 +1,3 @@
-import argparse
 import tkinter
 import typing
 from collections import namedtuple
@@ -8,8 +7,6 @@ from miros import return_status
 from miros import Event
 from miros import signals
 from miros import spy_on
-
-import helpers
 
 MoveEventPayload = namedtuple('MoveEventPayload', ['direction', 'speedup'])
 
@@ -105,11 +102,11 @@ class Gui(TestableGui):
 
         self.root.bind('<Left>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(-1, 0), speedup=helpers.is_speedup_modifier_active(e.state))))
 
-        self.root.bind('<Right>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(1, 0),speedup=helpers.is_speedup_modifier_active(e.state))))
+        self.root.bind('<Right>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(1, 0), speedup=helpers.is_speedup_modifier_active(e.state))))
 
         self.root.bind('<Up>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(0, -1), speedup=helpers.is_speedup_modifier_active(e.state))))
 
-        self.root.bind('<Down>', lambda e: self.send_event(signal=signals.MOVE,payload=MoveEventPayload(direction=(0, 1), speedup=helpers.is_speedup_modifier_active(e.state))))
+        self.root.bind('<Down>', lambda e: self.send_event(signal=signals.MOVE, payload=MoveEventPayload(direction=(0, 1), speedup=helpers.is_speedup_modifier_active(e.state))))
 
         self.root.bind('<Motion>', lambda e: self.send_event(signal=signals.POINTER_MOVED, payload=(e.x, e.y)))
 
@@ -307,14 +304,7 @@ def vertical_state(c: Statechart, e: Event) -> return_status:
     return status
 
 
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser(prog='screenuler', description='Simple Python Tkinter screen ruler')
-    parser.add_argument('-b', '--background', type=str, default='red', help='color name (red) or hexcode (#f00)')
-    parser.add_argument('-m', '--mark_color', type=str, default='black', help='color name (red) or hexcode (#f00)')
-    parser.add_argument('-p', '--position_color', type=str, default='white', help='color name (red) or hexcode (#f00)')
-    args = parser.parse_args()
-
+def run(args):
     b = GlobalBus()
     s = Statechart('statechart', bus=b)
     g = Gui(bus=b, background=args.background, mark_color=args.mark_color, position_color=args.position_color)

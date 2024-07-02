@@ -1,11 +1,11 @@
 import time
 import unittest
 
-from main import Statechart
-from main import GlobalBus
-from main import TestableGui
-from main import init_state
-from main import MoveEventPayload
+from src.screenuler import Statechart
+from src.screenuler import GlobalBus
+from src.screenuler import TestableGui
+from src.screenuler import init_state
+from src.screenuler import MoveEventPayload
 
 from miros import stripped
 from miros import Event
