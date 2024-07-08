@@ -1,6 +1,6 @@
 import unittest
 
-from src import helpers
+from screenuler import helpers
 
 
 class TestHelpers(unittest.TestCase):

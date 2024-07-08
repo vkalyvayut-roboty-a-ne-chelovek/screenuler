@@ -1,6 +1,6 @@
 [project]
 name = "screenuler"
-version = "0.1.1"
+version = "0.1.4"
 authors = [
     { name="vkalyvayut-roboty-a-ne-chelovek" }
 ]
@@ -27,4 +27,4 @@ Homepage = "https://github.com/vkalyvayut-roboty-a-ne-chelovek/screenuler"
 Issues = "https://github.com/vkalyvayut-roboty-a-ne-chelovek/screenuler/issues"
 
 [project.scripts]
-screenuler = "screenuler:make_arguments_and_run"
+screenuler = "screenuler.app:make_arguments_and_run"

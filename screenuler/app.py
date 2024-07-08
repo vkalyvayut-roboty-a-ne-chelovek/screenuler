@@ -11,8 +11,7 @@ from miros import spy_on
 
 MoveEventPayload = namedtuple('MoveEventPayload', ['direction', 'speedup'])
 
-from src import helpers
-
+import screenuler.helpers as helpers
 
 class GlobalBus:
     def __init__(self):
@@ -324,3 +323,6 @@ def make_arguments_and_run():
     args = parser.parse_args()
 
     run(args)
+
+if __name__ == '__main__':
+    make_arguments_and_run()

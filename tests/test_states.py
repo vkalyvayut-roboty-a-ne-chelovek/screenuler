@@ -1,11 +1,11 @@
 import time
 import unittest
 
-from src.screenuler import Statechart
-from src.screenuler import GlobalBus
-from src.screenuler import TestableGui
-from src.screenuler import init_state
-from src.screenuler import MoveEventPayload
+from screenuler.app import Statechart
+from screenuler.app import GlobalBus
+from screenuler.app import TestableGui
+from screenuler.app import init_state
+from screenuler.app import MoveEventPayload
 
 from miros import stripped
 from miros import Event
