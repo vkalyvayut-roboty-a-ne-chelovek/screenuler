@@ -1,3 +1,4 @@
+import argparse
 import tkinter
 import typing
 from collections import namedtuple
@@ -9,6 +10,8 @@ from miros import signals
 from miros import spy_on
 
 MoveEventPayload = namedtuple('MoveEventPayload', ['direction', 'speedup'])
+
+from src import helpers
 
 
 class GlobalBus:
@@ -312,3 +315,12 @@ def run(args):
     s.start_at(init_state)
 
     g.run()
+
+def make_arguments_and_run():
+    parser = argparse.ArgumentParser(prog='screenuler', description='Simple Python Tkinter screen ruler')
+    parser.add_argument('-b', '--background', type=str, default='red', help='color name (red) or hexcode (#f00)')
+    parser.add_argument('-m', '--mark_color', type=str, default='black', help='color name (red) or hexcode (#f00)')
+    parser.add_argument('-p', '--position_color', type=str, default='white', help='color name (red) or hexcode (#f00)')
+    args = parser.parse_args()
+
+    run(args)

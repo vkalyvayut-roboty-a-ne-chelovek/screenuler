@@ -5,9 +5,26 @@ authors = [
     { name="vkalyvayut-roboty-a-ne-chelovek" }
 ]
 description = "Simple Python Tkinter screen ruler"
+
 readme = "README.md"
+license = { file = "LICENSE" }
+
+dependencies = [
+    "miros"
+]
 requires-python = ">=3.10"
 
 [project.urls]
 Homepage = "https://github.com/vkalyvayut-roboty-a-ne-chelovek/screenuler"
 Issues = "https://github.com/vkalyvayut-roboty-a-ne-chelovek/screenuler/issues"
+
+[project.scripts]
+screenuler = "screenuler:make_arguments_and_run"
+
+classifiers = [
+    "Programming Language :: Python",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: The Unlicense (Unlicense)",
+    "Operating System :: OS Independent"
+]
